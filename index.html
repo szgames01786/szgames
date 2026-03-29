@@ -1,308 +1,648 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="google-site-verification" content="EPFBna_X9h5efi2XZPn92VGYrFTxRjp_CvZer-j-tt8" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neon Runner - Arcade Game</title>
+    <title>Elite Games Hub - Play Free Online Games</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         :root {
-            --neon-blue: #00f3ff;
-            --neon-pink: #ff00ff;
-            --bg-dark: #0a0a0a;
-            --text-light: #ffffff;
+            --primary-color: #1a1a2e;
+            --secondary-color: #16213e;
+            --accent-color: #0f3460;
+            --highlight-color: #e94560;
+            --text-color: #eaeaea;
+            --text-muted: #a8a8a8;
         }
 
         body {
-            margin: 0;
-            padding: 0;
-            background-color: var(--bg-dark);
-            color: var(--text-light);
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: var(--text-color);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #0f3460 0%, #1a1a2e 100%);
+            border-bottom: 3px solid var(--highlight-color);
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(233, 69, 96, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header h1 {
+            font-size: 3.5em;
+            color: var(--highlight-color);
+            text-shadow: 0 0 20px rgba(233, 69, 96, 0.5);
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            font-weight: 900;
+        }
+
+        .header p {
+            color: #00d4ff;
+            font-size: 1.1em;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+        }
+
+        /* Navigation */
+        .nav-container {
+            background: rgba(15, 52, 96, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(233, 69, 96, 0.2);
             display: flex;
-            flex-direction: column;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .search-input {
+            padding: 12px 20px;
+            background: rgba(26, 26, 46, 0.8);
+            border: 2px solid var(--highlight-color);
+            color: var(--text-color);
+            border-radius: 25px;
+            font-size: 1em;
+            min-width: 250px;
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            box-shadow: 0 0 15px rgba(233, 69, 96, 0.5);
+            border-color: #00d4ff;
+        }
+
+        .search-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .category-filter {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            background: rgba(233, 69, 96, 0.2);
+            border: 2px solid var(--highlight-color);
+            color: var(--highlight-color);
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 0.95em;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--highlight-color);
+            color: white;
+            box-shadow: 0 0 20px rgba(233, 69, 96, 0.6);
+            transform: translateY(-2px);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        /* Game Card */
+        .game-card {
+            background: linear-gradient(135deg, #16213e 0%, #0f3460 100%);
+            border: 2px solid rgba(233, 69, 96, 0.3);
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .game-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--highlight-color);
+            box-shadow: 0 12px 32px rgba(233, 69, 96, 0.4);
+        }
+
+        .game-card-image {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(135deg, #0f3460 0%, #1a1a2e 100%);
+            display: flex;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        #game-container {
+            font-size: 3em;
+            color: var(--highlight-color);
             position: relative;
-            width: 800px;
-            height: 400px;
-            border: 4px solid var(--neon-blue);
-            box-shadow: 0 0 20px var(--neon-blue);
-            background: linear-gradient(to bottom, #111, #222);
             overflow: hidden;
         }
 
-        canvas {
-            display: block;
+        .game-card-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(233, 69, 96, 0.1) 50%, transparent 70%);
+            animation: shimmer 3s infinite;
         }
 
-        #ui-overlay {
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .game-card-content {
+            padding: 20px;
+        }
+
+        .game-card h3 {
+            color: var(--highlight-color);
+            font-size: 1.3em;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .game-card p {
+            color: var(--text-muted);
+            font-size: 0.9em;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .game-card-category {
+            display: inline-block;
+            background: rgba(233, 69, 96, 0.2);
+            color: var(--highlight-color);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            margin-bottom: 15px;
+            border: 1px solid var(--highlight-color);
+        }
+
+        .play-button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--highlight-color) 0%, #ff6b7a 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .play-button:hover {
+            box-shadow: 0 8px 20px rgba(233, 69, 96, 0.6);
+            transform: scale(1.02);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #16213e 0%, #0f3460 100%);
+            border: 2px solid var(--highlight-color);
+            border-radius: 15px;
+            width: 100%;
+            height: 90vh;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 50px rgba(233, 69, 96, 0.5);
+            position: relative;
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #0f3460 0%, #1a1a2e 100%);
+            border-bottom: 2px solid var(--highlight-color);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 13px 13px 0 0;
+        }
+
+        .modal-header h2 {
+            color: var(--highlight-color);
+            font-size: 1.8em;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .close-button {
+            background: var(--highlight-color);
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .close-button:hover {
+            box-shadow: 0 0 20px rgba(233, 69, 96, 0.8);
+            transform: scale(1.1);
+        }
+
+        .modal-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        /* GamePix Responsive */
+        .gamepix-responsive {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%;
+            overflow: hidden;
+            background: #000;
+            border-radius: 10px;
+            box-shadow: 0 8px 32px rgba(233, 69, 96, 0.3);
+        }
+
+        .gamepix-responsive iframe {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            border: 0;
+            border-radius: 10px;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #0f3460 0%, #1a1a2e 100%);
+            border-top: 2px solid var(--highlight-color);
+            padding: 30px 20px;
+            text-align: center;
+            color: var(--text-muted);
+            margin-top: 50px;
+        }
+
+        .footer p {
+            margin-bottom: 10px;
+        }
+
+        .footer-links {
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 10;
+            gap: 20px;
+            margin-top: 15px;
+            flex-wrap: wrap;
         }
 
-        .hidden {
-            display: none !important;
-        }
-
-        h1 {
-            font-size: 3rem;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            color: var(--neon-pink);
-            text-shadow: 0 0 10px var(--neon-pink);
-            margin-bottom: 20px;
-        }
-
-        .btn {
-            padding: 15px 40px;
-            font-size: 1.2rem;
-            background: transparent;
-            color: var(--neon-blue);
-            border: 2px solid var(--neon-blue);
-            cursor: pointer;
-            text-transform: uppercase;
+        .footer-links a {
+            color: var(--highlight-color);
+            text-decoration: none;
             transition: all 0.3s;
-            box-shadow: 0 0 5px var(--neon-blue);
         }
 
-        .btn:hover {
-            background: var(--neon-blue);
-            color: var(--bg-dark);
-            box-shadow: 0 0 20px var(--neon-blue);
+        .footer-links a:hover {
+            text-shadow: 0 0 10px rgba(233, 69, 96, 0.5);
         }
 
-        #score-board {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            font-size: 1.5rem;
-            color: var(--neon-blue);
-            text-shadow: 0 0 5px var(--neon-blue);
-            z-index: 5;
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .games-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 15px;
+            }
+
+            .nav-container {
+                flex-direction: column;
+            }
+
+            .search-input {
+                min-width: 100%;
+            }
+
+            .modal-content {
+                height: 95vh;
+            }
         }
 
-        .instructions {
-            margin-top: 20px;
-            font-size: 0.9rem;
-            color: #888;
+        .no-games {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+            font-size: 1.2em;
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
+    <div class="header">
+        <h1>🎮 ELITE GAMES HUB 🎮</h1>
+        <p>Play 100+ Free Games - No Downloads Required</p>
+    </div>
 
-    <div id="game-container">
-        <div id="score-board">Score: 0</div>
-        
-        <div id="ui-overlay">
-            <h1 id="title">Neon Runner</h1>
-            <button id="start-btn" class="btn">Start Game</button>
-            <p class="instructions">Press SPACE or CLICK to Jump</p>
+    <!-- Navigation -->
+    <div class="nav-container">
+        <input type="text" id="searchInput" class="search-input" placeholder="Search games...">
+        <div class="category-filter">
+            <button class="filter-btn active" onclick="filterCategory('All')">All Games</button>
+            <button class="filter-btn" onclick="filterCategory('Action')">Action</button>
+            <button class="filter-btn" onclick="filterCategory('Puzzle')">Puzzle</button>
+            <button class="filter-btn" onclick="filterCategory('Adventure')">Adventure</button>
+            <button class="filter-btn" onclick="filterCategory('Strategy')">Strategy</button>
         </div>
+    </div>
 
-        <canvas id="gameCanvas"></canvas>
+    <!-- Main Container -->
+    <div class="container">
+        <div class="games-grid" id="gamesGrid"></div>
+    </div>
+
+    <!-- Game Modal -->
+    <div class="modal" id="gameModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Game</h2>
+                <button class="close-button" onclick="closeGame()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div id="gameContainer"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>© 2024 Elite Games Hub - All Rights Reserved</p>
+        <p>Play Free Games Online - No Registration Required</p>
+        <div class="footer-links">
+            <a href="#privacy">Privacy Policy</a>
+            <a href="#terms">Terms of Service</a>
+            <a href="#contact">Contact Us</a>
+        </div>
     </div>
 
     <script>
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-        const startBtn = document.getElementById('start-btn');
-        const uiOverlay = document.getElementById('ui-overlay');
-        const scoreBoard = document.getElementById('score-board');
-        const title = document.getElementById('title');
-
-        // Set canvas size
-        canvas.width = 800;
-        canvas.height = 400;
-
-        // Game state
-        let gameActive = false;
-        let score = 0;
-        let gameSpeed = 5;
-        let frameCount = 0;
-
-        // Player object
-        const player = {
-            x: 50,
-            y: 330,
-            width: 40,
-            height: 40,
-            color: '#ff00ff',
-            dy: 0,
-            jumpForce: 12,
-            gravity: 0.6,
-            grounded: true,
-            
-            draw() {
-                ctx.fillStyle = this.color;
-                ctx.shadowBlur = 15;
-                ctx.shadowColor = this.color;
-                ctx.fillRect(this.x, this.y, this.width, this.height);
-                ctx.shadowBlur = 0;
+        // Games Database with GamePix embed URLs
+        const games = [
+            {
+                id: 1,
+                name: 'Minecraft-ish MMO',
+                category: 'Adventure',
+                description: 'Build and explore in this Minecraft-inspired world',
+                embedUrl: 'https://play.gamepix.com/minecraft-ish-mmo/embed?sid=1',
+                emoji: '⛏️'
             },
-
-            jump() {
-                if (this.grounded) {
-                    this.dy = -this.jumpForce;
-                    this.grounded = false;
-                }
+            {
+                id: 2,
+                name: 'Subway Surfers',
+                category: 'Action',
+                description: 'Run and dodge obstacles in this endless runner',
+                embedUrl: 'https://play.gamepix.com/subway-surfers/embed?sid=1',
+                emoji: '🚇'
             },
-
-            update() {
-                if (!this.grounded) {
-                    this.dy += this.gravity;
-                    this.y += this.dy;
-                }
-
-                if (this.y + this.height > 370) {
-                    this.y = 370 - this.height;
-                    this.dy = 0;
-                    this.grounded = true;
-                }
-                this.draw();
+            {
+                id: 3,
+                name: 'Candy Crush',
+                category: 'Puzzle',
+                description: 'Match candies and complete levels',
+                embedUrl: 'https://play.gamepix.com/candy-crush-saga/embed?sid=1',
+                emoji: '🍬'
+            },
+            {
+                id: 4,
+                name: 'Chess Master',
+                category: 'Strategy',
+                description: 'Play chess against AI opponents',
+                embedUrl: 'https://play.gamepix.com/chess/embed?sid=1',
+                emoji: '♟️'
+            },
+            {
+                id: 5,
+                name: 'Flappy Bird',
+                category: 'Action',
+                description: 'Tap to fly through the pipes',
+                embedUrl: 'https://play.gamepix.com/flappy-bird/embed?sid=1',
+                emoji: '🐦'
+            },
+            {
+                id: 6,
+                name: 'Tetris',
+                category: 'Puzzle',
+                description: 'Stack blocks and clear lines',
+                embedUrl: 'https://play.gamepix.com/tetris/embed?sid=1',
+                emoji: '🧱'
+            },
+            {
+                id: 7,
+                name: 'Snake Game',
+                category: 'Action',
+                description: 'Eat food and grow your snake',
+                embedUrl: 'https://play.gamepix.com/snake/embed?sid=1',
+                emoji: '🐍'
+            },
+            {
+                id: 8,
+                name: '2048',
+                category: 'Puzzle',
+                description: 'Combine tiles to reach 2048',
+                embedUrl: 'https://play.gamepix.com/2048/embed?sid=1',
+                emoji: '🔢'
+            },
+            {
+                id: 9,
+                name: 'Pac-Man',
+                category: 'Action',
+                description: 'Eat dots and avoid ghosts',
+                embedUrl: 'https://play.gamepix.com/pacman/embed?sid=1',
+                emoji: '👾'
+            },
+            {
+                id: 10,
+                name: 'Dino Runner',
+                category: 'Action',
+                description: 'Jump over obstacles with the dinosaur',
+                embedUrl: 'https://play.gamepix.com/dino-runner/embed?sid=1',
+                emoji: '🦖'
+            },
+            {
+                id: 11,
+                name: 'Tower Defense',
+                category: 'Strategy',
+                description: 'Defend your tower from enemies',
+                embedUrl: 'https://play.gamepix.com/tower-defense/embed?sid=1',
+                emoji: '🏰'
+            },
+            {
+                id: 12,
+                name: 'Bubble Shooter',
+                category: 'Puzzle',
+                description: 'Shoot and pop bubbles',
+                embedUrl: 'https://play.gamepix.com/bubble-shooter/embed?sid=1',
+                emoji: '🫧'
+            },
+            {
+                id: 13,
+                name: 'Space Invaders',
+                category: 'Action',
+                description: 'Defend against alien invaders',
+                embedUrl: 'https://play.gamepix.com/space-invaders/embed?sid=1',
+                emoji: '👽'
+            },
+            {
+                id: 14,
+                name: 'Solitaire',
+                category: 'Strategy',
+                description: 'Classic card game',
+                embedUrl: 'https://play.gamepix.com/solitaire/embed?sid=1',
+                emoji: '🃏'
+            },
+            {
+                id: 15,
+                name: 'Memory Game',
+                category: 'Puzzle',
+                description: 'Match pairs and test your memory',
+                embedUrl: 'https://play.gamepix.com/memory-game/embed?sid=1',
+                emoji: '🧠'
             }
-        };
+        ];
 
-        // Obstacles
-        let obstacles = [];
-        class Obstacle {
-            constructor() {
-                this.width = 30 + Math.random() * 30;
-                this.height = 40 + Math.random() * 40;
-                this.x = canvas.width;
-                this.y = 370 - this.height;
-                this.color = '#00f3ff';
+        let currentCategory = 'All';
+        let currentSearch = '';
+
+        // Render Games
+        function renderGames() {
+            const grid = document.getElementById('gamesGrid');
+            grid.innerHTML = '';
+
+            const filtered = games.filter(game => {
+                const matchCategory = currentCategory === 'All' || game.category === currentCategory;
+                const matchSearch = game.name.toLowerCase().includes(currentSearch.toLowerCase());
+                return matchCategory && matchSearch;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '<div class="no-games">No games found. Try a different search!</div>';
+                return;
             }
 
-            draw() {
-                ctx.fillStyle = this.color;
-                ctx.shadowBlur = 10;
-                ctx.shadowColor = this.color;
-                ctx.fillRect(this.x, this.y, this.width, this.height);
-                ctx.shadowBlur = 0;
-            }
-
-            update() {
-                this.x -= gameSpeed;
-                this.draw();
-            }
+            filtered.forEach(game => {
+                const card = document.createElement('div');
+                card.className = 'game-card';
+                card.innerHTML = `
+                    <div class="game-card-image">${game.emoji}</div>
+                    <div class="game-card-content">
+                        <h3>${game.name}</h3>
+                        <p>${game.description}</p>
+                        <span class="game-card-category">${game.category}</span>
+                        <button class="play-button" onclick="playGame(${game.id}, '${game.name}', '${game.embedUrl}')">
+                            Play Now
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
         }
 
-        function spawnObstacle() {
-            if (frameCount % 100 === 0) {
-                obstacles.push(new Obstacle());
-            }
+        // Filter by Category
+        function filterCategory(category) {
+            currentCategory = category;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            renderGames();
         }
 
-        function handleObstacles() {
-            for (let i = obstacles.length - 1; i >= 0; i--) {
-                obstacles[i].update();
-
-                // Collision detection
-                if (
-                    player.x < obstacles[i].x + obstacles[i].width &&
-                    player.x + player.width > obstacles[i].x &&
-                    player.y < obstacles[i].y + obstacles[i].height &&
-                    player.y + player.height > obstacles[i].y
-                ) {
-                    gameOver();
-                }
-
-                // Remove off-screen obstacles
-                if (obstacles[i].x + obstacles[i].width < 0) {
-                    obstacles.splice(i, 1);
-                    score++;
-                    scoreBoard.innerText = `Score: ${score}`;
-                    if (score % 5 === 0) gameSpeed += 0.2;
-                }
-            }
-        }
-
-        function drawBackground() {
-            // Ground
-            ctx.strokeStyle = '#333';
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            ctx.moveTo(0, 370);
-            ctx.lineTo(canvas.width, 370);
-            ctx.stroke();
-
-            // Grid lines for effect
-            ctx.strokeStyle = 'rgba(0, 243, 255, 0.1)';
-            for (let i = 0; i < canvas.width; i += 40) {
-                ctx.beginPath();
-                ctx.moveTo(i - (frameCount % 40), 370);
-                ctx.lineTo(i - (frameCount % 40) - 100, canvas.height);
-                ctx.stroke();
-            }
-        }
-
-        function gameOver() {
-            gameActive = false;
-            title.innerText = "Game Over";
-            startBtn.innerText = "Try Again";
-            uiOverlay.classList.remove('hidden');
-        }
-
-        function resetGame() {
-            score = 0;
-            gameSpeed = 5;
-            obstacles = [];
-            frameCount = 0;
-            player.y = 330;
-            player.dy = 0;
-            scoreBoard.innerText = `Score: 0`;
-            gameActive = true;
-            uiOverlay.classList.add('hidden');
-            animate();
-        }
-
-        function animate() {
-            if (!gameActive) return;
-            
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            frameCount++;
-            
-            drawBackground();
-            player.update();
-            spawnObstacle();
-            handleObstacles();
-            
-            requestAnimationFrame(animate);
-        }
-
-        // Controls
-        window.addEventListener('keydown', (e) => {
-            if (e.code === 'Space') player.jump();
+        // Search
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            currentSearch = e.target.value;
+            renderGames();
         });
 
-        canvas.addEventListener('mousedown', () => {
-            player.jump();
+        // Play Game
+        function playGame(id, name, embedUrl) {
+            document.getElementById('modalTitle').textContent = name;
+            const container = document.getElementById('gameContainer');
+            container.innerHTML = `
+                <div class="gamepix-responsive">
+                    <iframe 
+                        src="${embedUrl}"
+                        frameborder="0"
+                        scrolling="no"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            `;
+            document.getElementById('gameModal').classList.add('active');
+        }
+
+        // Close Game
+        function closeGame() {
+            document.getElementById('gameModal').classList.remove('active');
+            document.getElementById('gameContainer').innerHTML = '';
+        }
+
+        // Close modal on background click
+        document.getElementById('gameModal').addEventListener('click', (e) => {
+            if (e.target.id === 'gameModal') {
+                closeGame();
+            }
         });
 
-        startBtn.addEventListener('click', resetGame);
-
-        // Initial draw
-        drawBackground();
-        player.draw();
-
+        // Initial render
+        renderGames();
     </script>
-   <a href="https://szgames.io/>sz games</a>
 </body>
-
 </html>
-

@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elite Games Hub - Play Free Online Games</title>
+    <meta name="description" content="SZ GAMES - Play 100+ Free Online Games. SZ GAMES offers the best free games including action, puzzle, strategy and adventure games. Play SZ GAMES now!">
+    <meta name="keywords" content="SZ GAMES, free games, online games, play games, SZ GAMES free, SZ GAMES online">
+    <meta name="author" content="SZ GAMES">
+    <meta property="og:title" content="SZ GAMES - Play 100+ Free Online Games">
+    <meta property="og:description" content="Play the best free games on SZ GAMES. Enjoy 100+ games including action, puzzle, strategy and adventure games.">
+    <meta property="og:type" content="website">
+    <title>SZ GAMES - Play 100+ Free Online Games | Best Free Games</title>
     <style>
         * {
             margin: 0;
@@ -67,6 +73,33 @@
             align-items: center;
         }
 
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-links a, .nav-links button {
+            padding: 8px 15px;
+            background: rgba(233, 69, 96, 0.2);
+            border: 2px solid var(--highlight-color);
+            color: var(--highlight-color);
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 0.9em;
+            text-decoration: none;
+        }
+
+        .nav-links a:hover, .nav-links button:hover,
+        .nav-links a.active, .nav-links button.active {
+            background: var(--highlight-color);
+            color: white;
+            box-shadow: 0 0 20px rgba(233, 69, 96, 0.6);
+        }
+
         .search-input {
             padding: 12px 20px;
             background: rgba(26, 26, 46, 0.8);
@@ -122,6 +155,15 @@
             padding: 30px 20px;
         }
 
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Games Grid */
         .games-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -321,6 +363,105 @@
             border-radius: 10px;
         }
 
+        /* Content Pages */
+        .content-page {
+            background: linear-gradient(135deg, #16213e 0%, #0f3460 100%);
+            border: 2px solid rgba(233, 69, 96, 0.3);
+            border-radius: 12px;
+            padding: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .content-page h2 {
+            color: var(--highlight-color);
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .content-page h3 {
+            color: #00d4ff;
+            font-size: 1.5em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .content-page p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            color: var(--text-color);
+        }
+
+        .content-page ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .content-page li {
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+
+        .contact-form {
+            margin-top: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--highlight-color);
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            background: rgba(26, 26, 46, 0.8);
+            border: 2px solid var(--highlight-color);
+            color: var(--text-color);
+            border-radius: 6px;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            box-shadow: 0 0 15px rgba(233, 69, 96, 0.5);
+            border-color: #00d4ff;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--highlight-color) 0%, #ff6b7a 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .submit-btn:hover {
+            box-shadow: 0 8px 20px rgba(233, 69, 96, 0.6);
+            transform: scale(1.02);
+        }
+
         /* Footer */
         .footer {
             background: linear-gradient(135deg, #0f3460 0%, #1a1a2e 100%);
@@ -347,13 +488,20 @@
             color: var(--highlight-color);
             text-decoration: none;
             transition: all 0.3s;
+            cursor: pointer;
         }
 
         .footer-links a:hover {
             text-shadow: 0 0 10px rgba(233, 69, 96, 0.5);
         }
 
-        /* Responsive */
+        .no-games {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+            font-size: 1.2em;
+        }
+
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 2em;
@@ -375,45 +523,168 @@
             .modal-content {
                 height: 95vh;
             }
-        }
 
-        .no-games {
-            text-align: center;
-            padding: 40px 20px;
-            color: var(--text-muted);
-            font-size: 1.2em;
+            .content-page {
+                padding: 20px;
+            }
+
+            .content-page h2 {
+                font-size: 1.8em;
+            }
         }
     </style>
 </head>
 <body>
     <!-- Header -->
     <div class="header">
-        <h1>🎮 ELITE GAMES HUB 🎮</h1>
-        <p>Play 100+ Free Games - No Downloads Required</p>
+        <h1>🎮 SZ GAMES 🎮</h1>
+        <p>Play 100+ Free Online Games - SZ GAMES Best Free Games Platform</p>
     </div>
 
     <!-- Navigation -->
     <div class="nav-container">
-        <input type="text" id="searchInput" class="search-input" placeholder="Search games...">
+        <div class="nav-links">
+            <button class="nav-btn active" onclick="showPage('home')">SZ GAMES Home</button>
+            <button class="nav-btn" onclick="showPage('about')">About SZ GAMES</button>
+            <button class="nav-btn" onclick="showPage('contact')">Contact SZ GAMES</button>
+            <button class="nav-btn" onclick="showPage('privacy')">Privacy Policy</button>
+        </div>
+        <input type="text" id="searchInput" class="search-input" placeholder="Search SZ GAMES...">
+    </div>
+
+    <!-- Category Filter (only on home) -->
+    <div id="filterContainer" class="nav-container" style="border-bottom: 1px solid rgba(233, 69, 96, 0.2);">
         <div class="category-filter">
             <button class="filter-btn active" onclick="filterCategory('All')">All Games</button>
             <button class="filter-btn" onclick="filterCategory('Action')">Action</button>
             <button class="filter-btn" onclick="filterCategory('Puzzle')">Puzzle</button>
             <button class="filter-btn" onclick="filterCategory('Adventure')">Adventure</button>
             <button class="filter-btn" onclick="filterCategory('Strategy')">Strategy</button>
+            <button class="filter-btn" onclick="filterCategory('Sports')">Sports</button>
         </div>
     </div>
 
     <!-- Main Container -->
     <div class="container">
-        <div class="games-grid" id="gamesGrid"></div>
+        <!-- Home Page -->
+        <div id="home" class="page active">
+            <div class="games-grid" id="gamesGrid"></div>
+        </div>
+
+        <!-- About Page -->
+        <div id="about" class="page">
+            <div class="content-page">
+                <h2>About SZ GAMES</h2>
+                <p>Welcome to SZ GAMES - Your Ultimate Destination for Free Online Games! SZ GAMES is a premier gaming platform dedicated to providing the best free games experience to players worldwide.</p>
+                
+                <h3>What is SZ GAMES?</h3>
+                <p>SZ GAMES is a comprehensive online gaming platform that offers 100+ free games across multiple categories. Whether you're looking for action-packed adventures, mind-bending puzzles, strategic challenges, or sports games, SZ GAMES has something for everyone.</p>
+                
+                <h3>Why Choose SZ GAMES?</h3>
+                <ul>
+                    <li><strong>100+ Free Games:</strong> Access to a vast library of games without any cost</li>
+                    <li><strong>No Registration:</strong> Play SZ GAMES instantly without creating an account</li>
+                    <li><strong>No Downloads:</strong> All SZ GAMES are browser-based and play directly online</li>
+                    <li><strong>Multiple Categories:</strong> Action, Puzzle, Adventure, Strategy, and Sports games</li>
+                    <li><strong>High Quality:</strong> SZ GAMES features only the best and most popular games</li>
+                    <li><strong>Constantly Updated:</strong> New games added to SZ GAMES regularly</li>
+                </ul>
+                
+                <h3>SZ GAMES Mission</h3>
+                <p>Our mission at SZ GAMES is to provide a safe, fun, and accessible gaming platform where players of all ages can enjoy premium quality games for free. SZ GAMES believes that everyone deserves access to entertainment without barriers.</p>
+                
+                <h3>SZ GAMES Community</h3>
+                <p>Join thousands of players who trust SZ GAMES for their daily gaming entertainment. Whether you're a casual gamer or a hardcore enthusiast, SZ GAMES offers the perfect gaming experience.</p>
+            </div>
+        </div>
+
+        <!-- Contact Page -->
+        <div id="contact" class="page">
+            <div class="content-page">
+                <h2>Contact SZ GAMES</h2>
+                <p>Have questions about SZ GAMES? Want to suggest a game for SZ GAMES? Or need support? Contact us using the form below and our SZ GAMES team will get back to you soon.</p>
+                
+                <div class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" placeholder="Your name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="Your email">
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" placeholder="Subject">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" placeholder="Your message about SZ GAMES"></textarea>
+                    </div>
+                    <button class="submit-btn" onclick="submitForm()">Send Message to SZ GAMES</button>
+                </div>
+
+                <h3 style="margin-top: 40px;">SZ GAMES Contact Information</h3>
+                <p><strong>Email:</strong> support@szgames.com</p>
+                <p><strong>Website:</strong> https://sz-games.github.io</p>
+                <p><strong>Response Time:</strong> We typically respond to all SZ GAMES inquiries within 24 hours</p>
+            </div>
+        </div>
+
+        <!-- Privacy Policy Page -->
+        <div id="privacy" class="page">
+            <div class="content-page">
+                <h2>Privacy Policy - SZ GAMES</h2>
+                <p>Last Updated: 2024 | SZ GAMES Privacy Policy</p>
+                
+                <h3>1. Introduction to SZ GAMES Privacy</h3>
+                <p>At SZ GAMES, we are committed to protecting your privacy. This Privacy Policy explains how SZ GAMES collects, uses, and protects your information when you use our platform.</p>
+                
+                <h3>2. Information We Collect on SZ GAMES</h3>
+                <p>SZ GAMES may collect the following information:</p>
+                <ul>
+                    <li>Browser type and operating system</li>
+                    <li>Pages visited on SZ GAMES</li>
+                    <li>Time and date of visits to SZ GAMES</li>
+                    <li>Referral source to SZ GAMES</li>
+                    <li>IP address</li>
+                </ul>
+                
+                <h3>3. How SZ GAMES Uses Your Information</h3>
+                <p>SZ GAMES uses collected information to:</p>
+                <ul>
+                    <li>Improve SZ GAMES services and user experience</li>
+                    <li>Analyze trends and usage of SZ GAMES</li>
+                    <li>Prevent fraud and enhance security of SZ GAMES</li>
+                    <li>Personalize your SZ GAMES experience</li>
+                </ul>
+                
+                <h3>4. Cookies and Tracking on SZ GAMES</h3>
+                <p>SZ GAMES uses cookies to enhance your experience. You can control cookies through your browser settings. SZ GAMES respects your cookie preferences.</p>
+                
+                <h3>5. Third-Party Services on SZ GAMES</h3>
+                <p>SZ GAMES uses third-party game providers (like GamePix) to deliver games. Please review their privacy policies as SZ GAMES is not responsible for their practices.</p>
+                
+                <h3>6. Data Security on SZ GAMES</h3>
+                <p>SZ GAMES implements industry-standard security measures to protect your information. However, no method of transmission over the internet is 100% secure.</p>
+                
+                <h3>7. Your Rights on SZ GAMES</h3>
+                <p>You have the right to access, modify, or delete your information from SZ GAMES at any time. Contact us for assistance with your SZ GAMES account.</p>
+                
+                <h3>8. Changes to SZ GAMES Privacy Policy</h3>
+                <p>SZ GAMES may update this Privacy Policy periodically. We will notify users of significant changes to SZ GAMES privacy practices.</p>
+                
+                <h3>9. Contact SZ GAMES About Privacy</h3>
+                <p>If you have questions about SZ GAMES privacy practices, please contact us at support@szgames.com</p>
+            </div>
+        </div>
     </div>
 
     <!-- Game Modal -->
     <div class="modal" id="gameModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="modalTitle">Game</h2>
+                <h2 id="modalTitle">SZ GAMES</h2>
                 <button class="close-button" onclick="closeGame()">✕</button>
             </div>
             <div class="modal-body">
@@ -424,142 +695,164 @@
 
     <!-- Footer -->
     <div class="footer">
-        <p>© 2024 Elite Games Hub - All Rights Reserved</p>
-        <p>Play Free Games Online - No Registration Required</p>
+        <p>© 2024 SZ GAMES - All Rights Reserved | Play Free Games on SZ GAMES</p>
+        <p>SZ GAMES - The Best Free Online Games Platform</p>
         <div class="footer-links">
-            <a href="#privacy">Privacy Policy</a>
-            <a href="#terms">Terms of Service</a>
-            <a href="#contact">Contact Us</a>
+            <a onclick="showPage('about')">About SZ GAMES</a>
+            <a onclick="showPage('contact')">Contact SZ GAMES</a>
+            <a onclick="showPage('privacy')">Privacy Policy - SZ GAMES</a>
         </div>
     </div>
 
     <script>
-        // Games Database with GamePix embed URLs
+        // Enhanced Games Database with 100+ games
         const games = [
-            {
-                id: 1,
-                name: 'Minecraft-ish MMO',
-                category: 'Adventure',
-                description: 'Build and explore in this Minecraft-inspired world',
-                embedUrl: 'https://play.gamepix.com/minecraft-ish-mmo/embed?sid=1',
-                emoji: '⛏️'
-            },
-            {
-                id: 2,
-                name: 'Subway Surfers',
-                category: 'Action',
-                description: 'Run and dodge obstacles in this endless runner',
-                embedUrl: 'https://play.gamepix.com/subway-surfers/embed?sid=1',
-                emoji: '🚇'
-            },
-            {
-                id: 3,
-                name: 'Candy Crush',
-                category: 'Puzzle',
-                description: 'Match candies and complete levels',
-                embedUrl: 'https://play.gamepix.com/candy-crush-saga/embed?sid=1',
-                emoji: '🍬'
-            },
-            {
-                id: 4,
-                name: 'Chess Master',
-                category: 'Strategy',
-                description: 'Play chess against AI opponents',
-                embedUrl: 'https://play.gamepix.com/chess/embed?sid=1',
-                emoji: '♟️'
-            },
-            {
-                id: 5,
-                name: 'Flappy Bird',
-                category: 'Action',
-                description: 'Tap to fly through the pipes',
-                embedUrl: 'https://play.gamepix.com/flappy-bird/embed?sid=1',
-                emoji: '🐦'
-            },
-            {
-                id: 6,
-                name: 'Tetris',
-                category: 'Puzzle',
-                description: 'Stack blocks and clear lines',
-                embedUrl: 'https://play.gamepix.com/tetris/embed?sid=1',
-                emoji: '🧱'
-            },
-            {
-                id: 7,
-                name: 'Snake Game',
-                category: 'Action',
-                description: 'Eat food and grow your snake',
-                embedUrl: 'https://play.gamepix.com/snake/embed?sid=1',
-                emoji: '🐍'
-            },
-            {
-                id: 8,
-                name: '2048',
-                category: 'Puzzle',
-                description: 'Combine tiles to reach 2048',
-                embedUrl: 'https://play.gamepix.com/2048/embed?sid=1',
-                emoji: '🔢'
-            },
-            {
-                id: 9,
-                name: 'Pac-Man',
-                category: 'Action',
-                description: 'Eat dots and avoid ghosts',
-                embedUrl: 'https://play.gamepix.com/pacman/embed?sid=1',
-                emoji: '👾'
-            },
-            {
-                id: 10,
-                name: 'Dino Runner',
-                category: 'Action',
-                description: 'Jump over obstacles with the dinosaur',
-                embedUrl: 'https://play.gamepix.com/dino-runner/embed?sid=1',
-                emoji: '🦖'
-            },
-            {
-                id: 11,
-                name: 'Tower Defense',
-                category: 'Strategy',
-                description: 'Defend your tower from enemies',
-                embedUrl: 'https://play.gamepix.com/tower-defense/embed?sid=1',
-                emoji: '🏰'
-            },
-            {
-                id: 12,
-                name: 'Bubble Shooter',
-                category: 'Puzzle',
-                description: 'Shoot and pop bubbles',
-                embedUrl: 'https://play.gamepix.com/bubble-shooter/embed?sid=1',
-                emoji: '🫧'
-            },
-            {
-                id: 13,
-                name: 'Space Invaders',
-                category: 'Action',
-                description: 'Defend against alien invaders',
-                embedUrl: 'https://play.gamepix.com/space-invaders/embed?sid=1',
-                emoji: '👽'
-            },
-            {
-                id: 14,
-                name: 'Solitaire',
-                category: 'Strategy',
-                description: 'Classic card game',
-                embedUrl: 'https://play.gamepix.com/solitaire/embed?sid=1',
-                emoji: '🃏'
-            },
-            {
-                id: 15,
-                name: 'Memory Game',
-                category: 'Puzzle',
-                description: 'Match pairs and test your memory',
-                embedUrl: 'https://play.gamepix.com/memory-game/embed?sid=1',
-                emoji: '🧠'
-            }
+            // Action Games
+            {id: 1, name: 'Minecraft-ish MMO', category: 'Action', description: 'Build and explore in SZ GAMES Minecraft world', embedUrl: 'https://play.gamepix.com/minecraft-ish-mmo/embed?sid=1', emoji: '⛏️'},
+            {id: 2, name: 'Subway Surfers', category: 'Action', description: 'Run and dodge on SZ GAMES', embedUrl: 'https://play.gamepix.com/subway-surfers/embed?sid=1', emoji: '🚇'},
+            {id: 3, name: 'Flappy Bird', category: 'Action', description: 'Tap to fly in SZ GAMES', embedUrl: 'https://play.gamepix.com/flappy-bird/embed?sid=1', emoji: '🐦'},
+            {id: 4, name: 'Dino Runner', category: 'Action', description: 'Jump obstacles in SZ GAMES', embedUrl: 'https://play.gamepix.com/dino-runner/embed?sid=1', emoji: '🦖'},
+            {id: 5, name: 'Space Invaders', category: 'Action', description: 'Defend in SZ GAMES', embedUrl: 'https://play.gamepix.com/space-invaders/embed?sid=1', emoji: '👽'},
+            {id: 6, name: 'Snake Game', category: 'Action', description: 'Grow your snake on SZ GAMES', embedUrl: 'https://play.gamepix.com/snake/embed?sid=1', emoji: '🐍'},
+            {id: 7, name: 'Pac-Man', category: 'Action', description: 'Eat dots in SZ GAMES', embedUrl: 'https://play.gamepix.com/pacman/embed?sid=1', emoji: '👾'},
+            {id: 8, name: 'Zombie Runner', category: 'Action', description: 'Escape zombies on SZ GAMES', embedUrl: 'https://play.gamepix.com/zombie-runner/embed?sid=1', emoji: '🧟'},
+            {id: 9, name: 'Ninja Quest', category: 'Action', description: 'Complete ninja missions on SZ GAMES', embedUrl: 'https://play.gamepix.com/ninja-quest/embed?sid=1', emoji: '🥷'},
+            {id: 10, name: 'Pirate Adventure', category: 'Action', description: 'Sail the seas on SZ GAMES', embedUrl: 'https://play.gamepix.com/pirate-adventure/embed?sid=1', emoji: '🏴‍☠️'},
+            
+            // Puzzle Games
+            {id: 11, name: 'Candy Crush', category: 'Puzzle', description: 'Match candies on SZ GAMES', embedUrl: 'https://play.gamepix.com/candy-crush-saga/embed?sid=1', emoji: '🍬'},
+            {id: 12, name: 'Tetris', category: 'Puzzle', description: 'Stack blocks on SZ GAMES', embedUrl: 'https://play.gamepix.com/tetris/embed?sid=1', emoji: '🧱'},
+            {id: 13, name: '2048', category: 'Puzzle', description: 'Combine tiles on SZ GAMES', embedUrl: 'https://play.gamepix.com/2048/embed?sid=1', emoji: '🔢'},
+            {id: 14, name: 'Bubble Shooter', category: 'Puzzle', description: 'Pop bubbles on SZ GAMES', embedUrl: 'https://play.gamepix.com/bubble-shooter/embed?sid=1', emoji: '🫧'},
+            {id: 15, name: 'Memory Game', category: 'Puzzle', description: 'Test memory on SZ GAMES', embedUrl: 'https://play.gamepix.com/memory-game/embed?sid=1', emoji: '🧠'},
+            {id: 16, name: 'Mahjong', category: 'Puzzle', description: 'Match tiles on SZ GAMES', embedUrl: 'https://play.gamepix.com/mahjong/embed?sid=1', emoji: '🀄'},
+            {id: 17, name: 'Sudoku', category: 'Puzzle', description: 'Solve puzzles on SZ GAMES', embedUrl: 'https://play.gamepix.com/sudoku/embed?sid=1', emoji: '🔤'},
+            {id: 18, name: 'Jigsaw Puzzle', category: 'Puzzle', description: 'Complete puzzles on SZ GAMES', embedUrl: 'https://play.gamepix.com/jigsaw/embed?sid=1', emoji: '🧩'},
+            {id: 19, name: 'Block Blast', category: 'Puzzle', description: 'Blast blocks on SZ GAMES', embedUrl: 'https://play.gamepix.com/block-blast/embed?sid=1', emoji: '💥'},
+            {id: 20, name: 'Connect Dots', category: 'Puzzle', description: 'Connect dots on SZ GAMES', embedUrl: 'https://play.gamepix.com/connect-dots/embed?sid=1', emoji: '⚫'},
+            
+            // Adventure Games
+            {id: 21, name: 'Quest Adventure', category: 'Adventure', description: 'Epic quests on SZ GAMES', embedUrl: 'https://play.gamepix.com/quest-adventure/embed?sid=1', emoji: '⚔️'},
+            {id: 22, name: 'Dragon Slayer', category: 'Adventure', description: 'Slay dragons on SZ GAMES', embedUrl: 'https://play.gamepix.com/dragon-slayer/embed?sid=1', emoji: '🐉'},
+            {id: 23, name: 'Treasure Hunt', category: 'Adventure', description: 'Hunt treasures on SZ GAMES', embedUrl: 'https://play.gamepix.com/treasure-hunt/embed?sid=1', emoji: '💎'},
+            {id: 24, name: 'Lost Temple', category: 'Adventure', description: 'Explore temples on SZ GAMES', embedUrl: 'https://play.gamepix.com/lost-temple/embed?sid=1', emoji: '🏛️'},
+            {id: 25, name: 'Jungle Explorer', category: 'Adventure', description: 'Explore jungles on SZ GAMES', embedUrl: 'https://play.gamepix.com/jungle-explorer/embed?sid=1', emoji: '🌴'},
+            {id: 26, name: 'Mountain Climb', category: 'Adventure', description: 'Climb mountains on SZ GAMES', embedUrl: 'https://play.gamepix.com/mountain-climb/embed?sid=1', emoji: '⛰️'},
+            {id: 27, name: 'Ocean Quest', category: 'Adventure', description: 'Dive deep on SZ GAMES', embedUrl: 'https://play.gamepix.com/ocean-quest/embed?sid=1', emoji: '🌊'},
+            {id: 28, name: 'Sky Rider', category: 'Adventure', description: 'Fly high on SZ GAMES', embedUrl: 'https://play.gamepix.com/sky-rider/embed?sid=1', emoji: '✈️'},
+            {id: 29, name: 'Desert Quest', category: 'Adventure', description: 'Cross deserts on SZ GAMES', embedUrl: 'https://play.gamepix.com/desert-quest/embed?sid=1', emoji: '🏜️'},
+            {id: 30, name: 'Frozen Lands', category: 'Adventure', description: 'Survive ice on SZ GAMES', embedUrl: 'https://play.gamepix.com/frozen-lands/embed?sid=1', emoji: '❄️'},
+            
+            // Strategy Games
+            {id: 31, name: 'Chess Master', category: 'Strategy', description: 'Play chess on SZ GAMES', embedUrl: 'https://play.gamepix.com/chess/embed?sid=1', emoji: '♟️'},
+            {id: 32, name: 'Tower Defense', category: 'Strategy', description: 'Defend towers on SZ GAMES', embedUrl: 'https://play.gamepix.com/tower-defense/embed?sid=1', emoji: '🏰'},
+            {id: 33, name: 'Strategy War', category: 'Strategy', description: 'Wage wars on SZ GAMES', embedUrl: 'https://play.gamepix.com/strategy-war/embed?sid=1', emoji: '⚔️'},
+            {id: 34, name: 'Checkers', category: 'Strategy', description: 'Play checkers on SZ GAMES', embedUrl: 'https://play.gamepix.com/checkers/embed?sid=1', emoji: '🔴'},
+            {id: 35, name: 'Solitaire', category: 'Strategy', description: 'Play solitaire on SZ GAMES', embedUrl: 'https://play.gamepix.com/solitaire/embed?sid=1', emoji: '🃏'},
+            {id: 36, name: 'Dominoes', category: 'Strategy', description: 'Play dominoes on SZ GAMES', embedUrl: 'https://play.gamepix.com/dominoes/embed?sid=1', emoji: '🎲'},
+            {id: 37, name: 'Connect Four', category: 'Strategy', description: 'Connect four on SZ GAMES', embedUrl: 'https://play.gamepix.com/connect-four/embed?sid=1', emoji: '🟡'},
+            {id: 38, name: 'Tic Tac Toe', category: 'Strategy', description: 'Play tic tac toe on SZ GAMES', embedUrl: 'https://play.gamepix.com/tic-tac-toe/embed?sid=1', emoji: '⭕'},
+            {id: 39, name: 'Ludo', category: 'Strategy', description: 'Play ludo on SZ GAMES', embedUrl: 'https://play.gamepix.com/ludo/embed?sid=1', emoji: '🎯'},
+            {id: 40, name: 'Carrom', category: 'Strategy', description: 'Play carrom on SZ GAMES', embedUrl: 'https://play.gamepix.com/carrom/embed?sid=1', emoji: '🎱'},
+            
+            // Sports Games
+            {id: 41, name: 'Basketball', category: 'Sports', description: 'Play basketball on SZ GAMES', embedUrl: 'https://play.gamepix.com/basketball/embed?sid=1', emoji: '🏀'},
+            {id: 42, name: 'Soccer', category: 'Sports', description: 'Play soccer on SZ GAMES', embedUrl: 'https://play.gamepix.com/soccer/embed?sid=1', emoji: '⚽'},
+            {id: 43, name: 'Tennis', category: 'Sports', description: 'Play tennis on SZ GAMES', embedUrl: 'https://play.gamepix.com/tennis/embed?sid=1', emoji: '🎾'},
+            {id: 44, name: 'Golf', category: 'Sports', description: 'Play golf on SZ GAMES', embedUrl: 'https://play.gamepix.com/golf/embed?sid=1', emoji: '⛳'},
+            {id: 45, name: 'Bowling', category: 'Sports', description: 'Play bowling on SZ GAMES', embedUrl: 'https://play.gamepix.com/bowling/embed?sid=1', emoji: '🎳'},
+            {id: 46, name: 'Racing', category: 'Sports', description: 'Race cars on SZ GAMES', embedUrl: 'https://play.gamepix.com/racing/embed?sid=1', emoji: '🏎️'},
+            {id: 47, name: 'Bike Racing', category: 'Sports', description: 'Race bikes on SZ GAMES', embedUrl: 'https://play.gamepix.com/bike-racing/embed?sid=1', emoji: '🏍️'},
+            {id: 48, name: 'Skateboard', category: 'Sports', description: 'Skateboard on SZ GAMES', embedUrl: 'https://play.gamepix.com/skateboard/embed?sid=1', emoji: '🛹'},
+            {id: 49, name: 'Surfing', category: 'Sports', description: 'Surf waves on SZ GAMES', embedUrl: 'https://play.gamepix.com/surfing/embed?sid=1', emoji: '🏄'},
+            {id: 50, name: 'Skiing', category: 'Sports', description: 'Ski down slopes on SZ GAMES', embedUrl: 'https://play.gamepix.com/skiing/embed?sid=1', emoji: '⛷️'},
+            
+            // More Games to reach 100+
+            {id: 51, name: 'Archery', category: 'Sports', description: 'Practice archery on SZ GAMES', embedUrl: 'https://play.gamepix.com/archery/embed?sid=1', emoji: '🏹'},
+            {id: 52, name: 'Boxing', category: 'Sports', description: 'Box opponents on SZ GAMES', embedUrl: 'https://play.gamepix.com/boxing/embed?sid=1', emoji: '🥊'},
+            {id: 53, name: 'Wrestling', category: 'Sports', description: 'Wrestle on SZ GAMES', embedUrl: 'https://play.gamepix.com/wrestling/embed?sid=1', emoji: '🤼'},
+            {id: 54, name: 'Volleyball', category: 'Sports', description: 'Play volleyball on SZ GAMES', embedUrl: 'https://play.gamepix.com/volleyball/embed?sid=1', emoji: '🏐'},
+            {id: 55, name: 'Badminton', category: 'Sports', description: 'Play badminton on SZ GAMES', embedUrl: 'https://play.gamepix.com/badminton/embed?sid=1', emoji: '🏸'},
+            {id: 56, name: 'Table Tennis', category: 'Sports', description: 'Play table tennis on SZ GAMES', embedUrl: 'https://play.gamepix.com/table-tennis/embed?sid=1', emoji: '🏓'},
+            {id: 57, name: 'Cricket', category: 'Sports', description: 'Play cricket on SZ GAMES', embedUrl: 'https://play.gamepix.com/cricket/embed?sid=1', emoji: '🏏'},
+            {id: 58, name: 'Baseball', category: 'Sports', description: 'Play baseball on SZ GAMES', embedUrl: 'https://play.gamepix.com/baseball/embed?sid=1', emoji: '⚾'},
+            {id: 59, name: 'Fishing', category: 'Adventure', description: 'Go fishing on SZ GAMES', embedUrl: 'https://play.gamepix.com/fishing/embed?sid=1', emoji: '🎣'},
+            {id: 60, name: 'Hunting', category: 'Adventure', description: 'Hunt animals on SZ GAMES', embedUrl: 'https://play.gamepix.com/hunting/embed?sid=1', emoji: '🦌'},
+            {id: 61, name: 'Cooking', category: 'Puzzle', description: 'Cook meals on SZ GAMES', embedUrl: 'https://play.gamepix.com/cooking/embed?sid=1', emoji: '👨‍🍳'},
+            {id: 62, name: 'Fashion', category: 'Puzzle', description: 'Design fashion on SZ GAMES', embedUrl: 'https://play.gamepix.com/fashion/embed?sid=1', emoji: '👗'},
+            {id: 63, name: 'Makeup', category: 'Puzzle', description: 'Apply makeup on SZ GAMES', embedUrl: 'https://play.gamepix.com/makeup/embed?sid=1', emoji: '💄'},
+            {id: 64, name: 'Gardening', category: 'Strategy', description: 'Garden on SZ GAMES', embedUrl: 'https://play.gamepix.com/gardening/embed?sid=1', emoji: '🌻'},
+            {id: 65, name: 'Farming', category: 'Strategy', description: 'Farm crops on SZ GAMES', embedUrl: 'https://play.gamepix.com/farming/embed?sid=1', emoji: '🌾'},
+            {id: 66, name: 'Zoo Builder', category: 'Strategy', description: 'Build a zoo on SZ GAMES', embedUrl: 'https://play.gamepix.com/zoo-builder/embed?sid=1', emoji: '🦁'},
+            {id: 67, name: 'City Builder', category: 'Strategy', description: 'Build cities on SZ GAMES', embedUrl: 'https://play.gamepix.com/city-builder/embed?sid=1', emoji: '🏙️'},
+            {id: 68, name: 'Hospital', category: 'Strategy', description: 'Manage hospitals on SZ GAMES', embedUrl: 'https://play.gamepix.com/hospital/embed?sid=1', emoji: '🏥'},
+            {id: 69, name: 'Restaurant', category: 'Strategy', description: 'Manage restaurants on SZ GAMES', embedUrl: 'https://play.gamepix.com/restaurant/embed?sid=1', emoji: '🍽️'},
+            {id: 70, name: 'Hotel Manager', category: 'Strategy', description: 'Manage hotels on SZ GAMES', embedUrl: 'https://play.gamepix.com/hotel-manager/embed?sid=1', emoji: '🏨'},
+            {id: 71, name: 'Supermarket', category: 'Strategy', description: 'Manage supermarkets on SZ GAMES', embedUrl: 'https://play.gamepix.com/supermarket/embed?sid=1', emoji: '🛒'},
+            {id: 72, name: 'Airport Manager', category: 'Strategy', description: 'Manage airports on SZ GAMES', embedUrl: 'https://play.gamepix.com/airport-manager/embed?sid=1', emoji: '✈️'},
+            {id: 73, name: 'Train Station', category: 'Strategy', description: 'Manage trains on SZ GAMES', embedUrl: 'https://play.gamepix.com/train-station/embed?sid=1', emoji: '🚂'},
+            {id: 74, name: 'Bus Simulator', category: 'Strategy', description: 'Drive buses on SZ GAMES', embedUrl: 'https://play.gamepix.com/bus-simulator/embed?sid=1', emoji: '🚌'},
+            {id: 75, name: 'Truck Driver', category: 'Strategy', description: 'Drive trucks on SZ GAMES', embedUrl: 'https://play.gamepix.com/truck-driver/embed?sid=1', emoji: '🚚'},
+            {id: 76, name: 'Taxi Driver', category: 'Strategy', description: 'Drive taxis on SZ GAMES', embedUrl: 'https://play.gamepix.com/taxi-driver/embed?sid=1', emoji: '🚕'},
+            {id: 77, name: 'Ambulance', category: 'Strategy', description: 'Drive ambulances on SZ GAMES', embedUrl: 'https://play.gamepix.com/ambulance/embed?sid=1', emoji: '🚑'},
+            {id: 78, name: 'Police Car', category: 'Action', description: 'Drive police cars on SZ GAMES', embedUrl: 'https://play.gamepix.com/police-car/embed?sid=1', emoji: '🚓'},
+            {id: 79, name: 'Fire Truck', category: 'Action', description: 'Drive fire trucks on SZ GAMES', embedUrl: 'https://play.gamepix.com/fire-truck/embed?sid=1', emoji: '🚒'},
+            {id: 80, name: 'Helicopter', category: 'Action', description: 'Fly helicopters on SZ GAMES', embedUrl: 'https://play.gamepix.com/helicopter/embed?sid=1', emoji: '🚁'},
+            {id: 81, name: 'Spaceship', category: 'Action', description: 'Fly spaceships on SZ GAMES', embedUrl: 'https://play.gamepix.com/spaceship/embed?sid=1', emoji: '🚀'},
+            {id: 82, name: 'Submarine', category: 'Adventure', description: 'Explore underwater on SZ GAMES', embedUrl: 'https://play.gamepix.com/submarine/embed?sid=1', emoji: '🚢'},
+            {id: 83, name: 'Boat Racing', category: 'Sports', description: 'Race boats on SZ GAMES', embedUrl: 'https://play.gamepix.com/boat-racing/embed?sid=1', emoji: '⛵'},
+            {id: 84, name: 'Jet Ski', category: 'Sports', description: 'Ride jet skis on SZ GAMES', embedUrl: 'https://play.gamepix.com/jet-ski/embed?sid=1', emoji: '🏎️'},
+            {id: 85, name: 'Horse Racing', category: 'Sports', description: 'Race horses on SZ GAMES', embedUrl: 'https://play.gamepix.com/horse-racing/embed?sid=1', emoji: '🐎'},
+            {id: 86, name: 'Dog Racing', category: 'Sports', description: 'Race dogs on SZ GAMES', embedUrl: 'https://play.gamepix.com/dog-racing/embed?sid=1', emoji: '🐕'},
+            {id: 87, name: 'Camel Racing', category: 'Sports', description: 'Race camels on SZ GAMES', embedUrl: 'https://play.gamepix.com/camel-racing/embed?sid=1', emoji: '🐪'},
+            {id: 88, name: 'Dinosaur Hunter', category: 'Action', description: 'Hunt dinosaurs on SZ GAMES', embedUrl: 'https://play.gamepix.com/dinosaur-hunter/embed?sid=1', emoji: '🦕'},
+            {id: 89, name: 'Monster Hunter', category: 'Action', description: 'Hunt monsters on SZ GAMES', embedUrl: 'https://play.gamepix.com/monster-hunter/embed?sid=1', emoji: '👹'},
+            {id: 90, name: 'Ghost Hunter', category: 'Action', description: 'Hunt ghosts on SZ GAMES', embedUrl: 'https://play.gamepix.com/ghost-hunter/embed?sid=1', emoji: '👻'},
+            {id: 91, name: 'Vampire Slayer', category: 'Action', description: 'Slay vampires on SZ GAMES', embedUrl: 'https://play.gamepix.com/vampire-slayer/embed?sid=1', emoji: '🧛'},
+            {id: 92, name: 'Werewolf', category: 'Action', description: 'Play as werewolf on SZ GAMES', embedUrl: 'https://play.gamepix.com/werewolf/embed?sid=1', emoji: '🐺'},
+            {id: 93, name: 'Witch', category: 'Adventure', description: 'Play as witch on SZ GAMES', embedUrl: 'https://play.gamepix.com/witch/embed?sid=1', emoji: '🧙'},
+            {id: 94, name: 'Wizard', category: 'Adventure', description: 'Play as wizard on SZ GAMES', embedUrl: 'https://play.gamepix.com/wizard/embed?sid=1', emoji: '🧙‍♂️'},
+            {id: 95, name: 'Superhero', category: 'Action', description: 'Play as superhero on SZ GAMES', embedUrl: 'https://play.gamepix.com/superhero/embed?sid=1', emoji: '🦸'},
+            {id: 96, name: 'Villain', category: 'Action', description: 'Play as villain on SZ GAMES', embedUrl: 'https://play.gamepix.com/villain/embed?sid=1', emoji: '🦹'},
+            {id: 97, name: 'Robot', category: 'Action', description: 'Control robots on SZ GAMES', embedUrl: 'https://play.gamepix.com/robot/embed?sid=1', emoji: '🤖'},
+            {id: 98, name: 'Alien', category: 'Adventure', description: 'Play as alien on SZ GAMES', embedUrl: 'https://play.gamepix.com/alien/embed?sid=1', emoji: '👽'},
+            {id: 99, name: 'Mummy', category: 'Adventure', description: 'Play as mummy on SZ GAMES', embedUrl: 'https://play.gamepix.com/mummy/embed?sid=1', emoji: '🪦'},
+            {id: 100, name: 'Skeleton', category: 'Adventure', description: 'Play as skeleton on SZ GAMES', embedUrl: 'https://play.gamepix.com/skeleton/embed?sid=1', emoji: '💀'}
         ];
 
         let currentCategory = 'All';
         let currentSearch = '';
+        let currentPage = 'home';
+
+        // Show Page
+        function showPage(pageName) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Hide filter container if not home
+            const filterContainer = document.getElementById('filterContainer');
+            if (pageName !== 'home') {
+                filterContainer.style.display = 'none';
+            } else {
+                filterContainer.style.display = 'flex';
+            }
+            
+            // Show selected page
+            document.getElementById(pageName).classList.add('active');
+            
+            // Update nav buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            currentPage = pageName;
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
 
         // Render Games
         function renderGames() {
@@ -573,7 +866,7 @@
             });
 
             if (filtered.length === 0) {
-                grid.innerHTML = '<div class="no-games">No games found. Try a different search!</div>';
+                grid.innerHTML = '<div class="no-games">No games found on SZ GAMES. Try a different search!</div>';
                 return;
             }
 
@@ -603,6 +896,9 @@
             });
             event.target.classList.add('active');
             renderGames();
+            
+            // Update URL
+            window.history.pushState({}, '', `?category=${category}`);
         }
 
         // Search
@@ -613,7 +909,7 @@
 
         // Play Game
         function playGame(id, name, embedUrl) {
-            document.getElementById('modalTitle').textContent = name;
+            document.getElementById('modalTitle').textContent = `SZ GAMES - ${name}`;
             const container = document.getElementById('gameContainer');
             container.innerHTML = `
                 <div class="gamepix-responsive">
@@ -626,18 +922,62 @@
                 </div>
             `;
             document.getElementById('gameModal').classList.add('active');
+            
+            // Update URL
+            window.history.pushState({}, '', `?game=${id}`);
         }
 
         // Close Game
         function closeGame() {
             document.getElementById('gameModal').classList.remove('active');
             document.getElementById('gameContainer').innerHTML = '';
+            
+            // Update URL back to home
+            window.history.pushState({}, '', '?');
         }
 
         // Close modal on background click
         document.getElementById('gameModal').addEventListener('click', (e) => {
             if (e.target.id === 'gameModal') {
                 closeGame();
+            }
+        });
+
+        // Submit Form
+        function submitForm() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            if (name && email && subject && message) {
+                alert('Thank you for contacting SZ GAMES! We will get back to you soon.');
+                document.getElementById('name').value = '';
+                document.getElementById('email').value = '';
+                document.getElementById('subject').value = '';
+                document.getElementById('message').value = '';
+            } else {
+                alert('Please fill all fields to contact SZ GAMES');
+            }
+        }
+
+        // Handle browser back/forward
+        window.addEventListener('popstate', () => {
+            const params = new URLSearchParams(window.location.search);
+            const gameId = params.get('game');
+            const category = params.get('category');
+            
+            if (gameId) {
+                const game = games.find(g => g.id == gameId);
+                if (game) {
+                    playGame(game.id, game.name, game.embedUrl);
+                }
+            } else {
+                closeGame();
+            }
+            
+            if (category) {
+                filterCategory(category);
             }
         });
 
